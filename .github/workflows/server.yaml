@@ -47,20 +47,6 @@ jobs:
   format:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        build: [ ubuntu-stable, ubuntu-beta, ubuntu-nightly ]
-
-        include:
-          - build: ubuntu-stable
-            rust: stable
-
-          - build: ubuntu-beta
-            rust: beta
-
-          - build: ubuntu-nightly
-            rust: nightly
-
     steps:
       - uses: actions/checkout@v2
 
