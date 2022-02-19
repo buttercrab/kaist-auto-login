@@ -16,14 +16,20 @@ fn default_chrome_driver_url() -> String {
     "http://localhost:4444".to_string()
 }
 
+fn default_get_code_timeout() -> u64 {
+    10 * 60
+}
+
 #[derive(Debug, Clone, Deserialize)]
 pub struct Config {
     #[serde(default = "default_host")]
-    pub host: IpAddr,
+    host: IpAddr,
     #[serde(default = "default_port")]
-    pub port: u16,
+    port: u16,
     #[serde(default = "default_chrome_driver_url")]
-    pub chrome_driver_url: String,
+    chrome_driver_url: String,
+    #[serde(default = "default_get_code_timeout")]
+    get_code_timeout: u64,
 }
 
 impl Config {
@@ -53,5 +59,9 @@ impl Config {
 
     pub fn chrome_driver_url() -> &'static str {
         &Config::global().chrome_driver_url
+    }
+
+    pub fn get_code_timeout() -> u64 {
+        Config::global().get_code_timeout
     }
 }

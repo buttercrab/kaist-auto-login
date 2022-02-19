@@ -15,7 +15,7 @@ pub async fn websocket(socket: WebSocket) {
             let message = message?;
             let message = message.to_str().map_err(|_| anyhow!(""))?;
             let message = serde_json::from_str(message)?;
-            handle_input(message, &mut socket).await?;
+            handle_msg(message, &mut socket).await?;
             Ok::<_, anyhow::Error>(())
         }
         .await
@@ -51,10 +51,7 @@ impl From<GetCode> for Output {
     }
 }
 
-async fn handle_input(
-    msg: Input,
-    socket: &mut SplitSink<WebSocket, Message>,
-) -> anyhow::Result<()> {
+async fn handle_msg(msg: Input, socket: &mut SplitSink<WebSocket, Message>) -> anyhow::Result<()> {
     let msg = match msg {
         Input::GenerateEmail { id, pw } => {
             serde_json::to_string(&Output::from(generate_email(id, pw).await)).unwrap()

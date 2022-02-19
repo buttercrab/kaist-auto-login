@@ -1,5 +1,10 @@
-use crate::login::login;
+use std::time::Duration;
+
 use serde::{Deserialize, Serialize};
+use tokio::time::timeout;
+
+use crate::login::login;
+use crate::Config;
 
 #[derive(Serialize, Deserialize)]
 #[serde(tag = "type")]
@@ -22,6 +27,15 @@ pub enum GetCode {
     Timeout,
 }
 
-pub async fn get_code(_id: String, _email: String) -> GetCode {
-    GetCode::Timeout
+async fn get_code_impl(_id: String, _email: String) -> GetCode {
+    GetCode::NoAccount
+}
+
+pub async fn get_code(id: String, email: String) -> GetCode {
+    timeout(
+        Duration::from_secs(Config::get_code_timeout()),
+        get_code_impl(id, email),
+    )
+    .await
+    .unwrap_or(GetCode::Timeout)
 }

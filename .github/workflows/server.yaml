@@ -1,10 +1,6 @@
 on:
   push:
     branches: [ main ]
-    paths:
-      - "server/**"
-      - "Cargo.toml"
-      - ".github/workflows/server.yaml"
 
   pull_request:
     branches: [ main ]
