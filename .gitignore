@@ -1,0 +1,22 @@
+# IDE/editor related files
+# IntelliJ based IDE
+.idea/
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# Vim
+**/*.swp
+
+# Visual Studio
+.vs/
+
+# misc
+.DS_Store
+*.pem
+
+# Rust
+**/target/
+**/Cargo.lock
+**/*.rs.bk
