@@ -1,10 +1,6 @@
 on:
   push:
     branches: [ main ]
-    paths:
-      - "server/**"
-      - "Cargo.toml"
-      - ".github/workflows/server.yaml"
 
   pull_request:
     branches: [ main ]
@@ -50,20 +46,6 @@ jobs:
 
   format:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        build: [ ubuntu-stable, ubuntu-beta, ubuntu-nightly ]
-
-        include:
-          - build: ubuntu-stable
-            rust: stable
-
-          - build: ubuntu-beta
-            rust: beta
-
-          - build: ubuntu-nightly
-            rust: nightly
 
     steps:
       - uses: actions/checkout@v2
@@ -114,19 +96,3 @@ jobs:
         with:
           command: test
           args: --manifest-path server/Cargo.toml
-
-  security-audit:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Cache cargo bin
-        uses: actions/cache@v1
-        with:
-          path: ~/.cargo/bin
-          key: ${{ runner.os }}-cargo-audit
-
-      - uses: actions-rs/audit-check@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
