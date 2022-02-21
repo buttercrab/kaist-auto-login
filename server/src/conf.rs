@@ -1,6 +1,6 @@
-use chrono::Duration;
 use std::net::{IpAddr, Ipv4Addr, SocketAddr};
 
+use chrono::Duration;
 use deadpool_postgres::tokio_postgres::NoTls;
 use deadpool_postgres::{Pool, Runtime};
 use log::error;
@@ -68,6 +68,7 @@ struct Config {
     email_pw_charset: Vec<u8>,
     #[serde(default = "default_email_pw_length")]
     email_pw_length: usize,
+    #[serde(default)]
     postgres: deadpool_postgres::Config,
 }
 
@@ -75,8 +76,9 @@ fn global() -> &'static Config {
     static CONFIG: OnceCell<Config> = OnceCell::new();
 
     CONFIG.get_or_init(|| {
-        let builder =
-            config::Config::builder().add_source(config::Environment::default().separator("_"));
+        let builder = config::Config::builder()
+            .add_source(config::Environment::default().separator("_"))
+            .add_source(config::File::with_name("config"));
 
         match builder.build().and_then(|b| b.try_deserialize()) {
             Ok(config) => config,

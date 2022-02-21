@@ -15,7 +15,5 @@ pub async fn get_client() -> Client {
 }
 
 pub async fn init() {
-    let client = get_client().await;
-    let stmt = client.prepare(INIT_SQL).await.unwrap();
-    let _ = client.execute(&stmt, &[]).await.unwrap();
+    get_client().await.batch_execute(INIT_SQL).await.unwrap();
 }

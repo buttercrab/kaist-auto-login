@@ -18,6 +18,5 @@ async fn main() {
     let routes = warp::get().and(ws);
 
     let address = conf::address();
-    info!("server is running on {}", address);
     warp::serve(routes).run(address).await;
 }

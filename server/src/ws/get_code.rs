@@ -60,7 +60,7 @@ pub async fn get_code(id: String) -> Result<String, GetCodeError> {
         let total = session.select("INBOX")?.exists;
         let mut checked = std::cmp::max(0, total - 5);
 
-        while Local::now() - start >= timeout {
+        while Local::now() - start <= timeout {
             let total = session.select("INBOX")?.exists;
             if checked < total {
                 let msg = session.fetch(
