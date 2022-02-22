@@ -1,4 +1,3 @@
-use log::info;
 use warp::Filter;
 
 mod conf;
