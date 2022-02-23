@@ -9,7 +9,7 @@ on:
       - "chromedriver.Dockerfile"
 
 jobs:
-  build:
+  chrome-docker-build:
     runs-on: ubuntu-latest
 
     steps:
