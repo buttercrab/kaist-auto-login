@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      RUST_LOG: info
+      RUST_LOG_STYLE: always
+      CHROME_DRIVER_URL: "chromedriver:4444"
+      IMAP_DOMAIN: %IMAP_DOMAIN%
+      MAILCOW_URL: %MAILCOW_URL%
+      MAILCOW_API_KEY: %MAILCOW_API_KEY%
+      NEW_EMAIL_DOMAIN: %NEW_EMAIL_DOMAIN%
+      POSTGRES__HOST: postgres
+      POSTGRES__DBNAME: postgres
+      POSTGRES__USER: postgres
+      POSTGRES__PASSWORD: %POSTGRES_PASSWORD%
+    ports:
+      - "%PORT%:80"
+
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: %POSTGRES_PASSWORD%
+    volumes:
+      - "postgres_data:/var/lib/postgresql/data"
+
+  chromedriver:
+    build:
+      dockerfile: chromedriver.Dockerfile
+    command:
+      - "--port=4444"
+
+volumes:
+  postgres_data:

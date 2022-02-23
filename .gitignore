@@ -24,3 +24,6 @@
 # Environment Variables
 .env
 config.toml
+
+# Dockerfile
+docker-compose.yaml

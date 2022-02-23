@@ -1,3 +1,12 @@
+//! # Server for extension
+//!
+//! This server would create an email address if user can be logged in.
+//! Then from that account, the server would get verification code.
+//!
+//! ## Routes
+//!
+//! - `/ws/v1`: Websocket connection. See [`ws::v1::websocket`]
+//!
 use warp::Filter;
 
 mod conf;

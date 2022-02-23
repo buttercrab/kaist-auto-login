@@ -1,5 +1,10 @@
-use deadpool_postgres::{Client, Pool};
+use std::time::Duration;
+
+use deadpool_postgres::tokio_postgres::Error;
+use deadpool_postgres::{Client, Manager, Pool};
+use log::{error, info};
 use once_cell::sync::OnceCell;
+use tokio::time::sleep;
 
 use crate::conf::create_postgres_pool;
 
@@ -11,7 +16,16 @@ fn get_pool() -> &'static Pool {
 }
 
 pub async fn get_client() -> Client {
-    get_pool().get().await.unwrap()
+    loop {
+        match get_pool().get().await {
+            Ok(client) => break client,
+            Err(e) => {
+                error!("connecting database failed: {}", e);
+                info!("reconnecting in 5 secs...");
+                sleep(Duration::from_secs(5)).await;
+            }
+        }
+    }
 }
 
 pub async fn init() {
