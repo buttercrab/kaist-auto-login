@@ -10,7 +10,7 @@ on:
       - ".github/workflows/server.yaml"
 
 jobs:
-  build:
+  server-build:
     runs-on: ubuntu-latest
 
     strategy:
@@ -44,7 +44,7 @@ jobs:
           command: clippy
           args: --all-targets --manifest-path server/Cargo.toml -- -D warnings
 
-  format:
+  server-format:
     runs-on: ubuntu-latest
 
     steps:
@@ -64,7 +64,7 @@ jobs:
           command: fmt
           args: --all --manifest-path Cargo.toml -- --check
 
-  test:
+  server-test:
     runs-on: ubuntu-latest
 
     strategy:
