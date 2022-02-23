@@ -1,7 +1,6 @@
 use std::time::Duration;
 
-use deadpool_postgres::tokio_postgres::Error;
-use deadpool_postgres::{Client, Manager, Pool};
+use deadpool_postgres::{Client, Pool};
 use log::{error, info};
 use once_cell::sync::OnceCell;
 use tokio::time::sleep;
