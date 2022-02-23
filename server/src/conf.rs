@@ -77,8 +77,8 @@ fn global() -> &'static Config {
 
     CONFIG.get_or_init(|| {
         let builder = config::Config::builder()
-            .add_source(config::Environment::default().separator("_"))
-            .add_source(config::File::with_name("config"));
+            .add_source(config::Environment::default().separator("__"))
+            .add_source(config::File::with_name("config").required(false));
 
         match builder.build().and_then(|b| b.try_deserialize()) {
             Ok(config) => config,

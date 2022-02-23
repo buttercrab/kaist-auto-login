@@ -1,0 +1,23 @@
+on:
+  push:
+    branches: [ main ]
+
+  pull_request:
+    branches: [ main ]
+    paths:
+      - ".github/workflows/chrome-docker.yaml"
+      - "chromedriver.Dockerfile"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Docker build
+        run: |
+          docker buildx build . -f chromedriver.Dockerfile
