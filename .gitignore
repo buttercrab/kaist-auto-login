@@ -27,3 +27,6 @@ config.toml
 
 # Dockerfile
 docker-compose.yaml
+
+about.hbs
+about.toml

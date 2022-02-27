@@ -20,7 +20,7 @@ def main():
     new_email_domain = input("enter new email domain: ")
     config = config.replace("%NEW_EMAIL_DOMAIN%", f'"{new_email_domain}"')
     port = int(input("enter port to serve: "))
-    config = config.replace("%PORT%", port)
+    config = config.replace("%PORT%", str(port))
 
     with open("docker-compose.yaml", "w") as f:
         f.write(config)
